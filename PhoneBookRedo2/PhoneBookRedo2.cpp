@@ -1,5 +1,5 @@
 // PhoneBookRedo2.cpp : Defines the entry point for the console application.
-//
+//Author: Austin Boyd. Date: 11/4/16.  INFO450 PhonebookRedo
 
 #include "stdafx.h"
 #include <iostream>
@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-class entry
+class entry//class for one entry in the phonebook
 {
 	char name[20];
 	char homePhone[14];
@@ -24,7 +24,7 @@ public:
 
 
 
-entry::entry()
+entry::entry()//constructor
 {
 	strcpy_s(name, "");
 	strcpy_s(homePhone, "");
@@ -33,20 +33,20 @@ entry::entry()
 
 
 
-void entry::setEntry(char n[], char home[], char cell[])
+void entry::setEntry(char n[], char home[], char cell[])//pass values to make an entry
 {
 	strcpy_s(name, n);
 	strcpy_s(homePhone, home);
 	strcpy_s(mobilePhone, cell);
 }
 
-void entry::display()
+void entry::display()//show one entry
 {
 	printf(" name: %s\n home phone: %s\n mobile phone: %s\n\n",
 		name, homePhone, mobilePhone);
 }
 
-class phoneBook
+class phoneBook//class of a list of entries
 {
 	char filename[100];
 	int entryCount;
@@ -62,13 +62,13 @@ public:
 	void readList();
 };
 
-phoneBook::phoneBook()
+phoneBook::phoneBook()//creating phonebook with a max capacity of 100 entries
 {
 	mylist = new entry*[100];
 	entryCount = 0;
 }
 
-phoneBook::~phoneBook()
+phoneBook::~phoneBook()//deleting phonebook
 {
 	delete mylist;
 }
@@ -78,18 +78,18 @@ void phoneBook::setFilename(char f[])
 	strcpy_s(filename, f);
 }
 
-void phoneBook::addToList(entry *b)
+void phoneBook::addToList(entry *b)//adding an entry to the list and incrementing the entryCount
 {
 	mylist[entryCount] = b;
 	entryCount++;;
 }
 
-int phoneBook::getCount()
+int phoneBook::getCount()//counting how many entries
 {
 	return entryCount;
 }
 
-void phoneBook::showList()
+void phoneBook::showList()//displaying the list
 {
 	for (int i = 0; i < entryCount; i++)
 	{
@@ -97,7 +97,7 @@ void phoneBook::showList()
 	}
 }
 
-int phoneBook::saveList()
+int phoneBook::saveList()//saving the list
 {
 	ofstream output(filename);
 	if (!output)
@@ -116,7 +116,7 @@ int phoneBook::saveList()
 }
 
 
-void phoneBook::readList()
+void phoneBook::readList()//reading in 
 {
 	ifstream infile(filename);
 	if (!infile)
@@ -155,10 +155,10 @@ int main()
 	double alcohol;
 	char filename[50];
 
-	// create a new beerlist object
+	// create a new phoneBook object
 	phoneBook *booklist = new phoneBook();
 
-	// now get and set filename
+	// get and set filename
 	cout << "please enter full path filename" << endl;
 	gets_s(filename);
 	booklist->setFilename(filename);
@@ -171,7 +171,8 @@ int main()
 	}
 	else
 	{
-		cout << "You have " << booklist->getCount() << " in your list." << endl;
+		cout << "You have " << booklist->getCount() << " current entries in your list." << endl;
+		booklist->showList();
 	}
 
 
