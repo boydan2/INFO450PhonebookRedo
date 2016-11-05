@@ -89,13 +89,43 @@ int phoneBook::getCount()//counting how many entries
 	return entryCount;
 }
 
-void phoneBook::showList()//displaying the list
+void phoneBook::showList()
 {
 	for (int i = 0; i < entryCount; i++)
 	{
 		mylist[i]->display();
 	}
 }
+
+/*void phoneBook::showList()//displaying the list
+{
+	int choose = 0;
+	int temp = 0;
+	int current = 0;
+
+	do
+	{
+
+
+		for (int i = current; i < entryCount && i < current +5; i++)
+		{
+			mylist[i]->display();
+		}
+		if (current == entryCount - 1)
+		{
+			choose = 9;
+		}
+		else
+		{
+			cout << "Would you like to see 5 more? press 9 to quit or any other key to continue" << entryCount << endl;
+			cin >> choose;
+			cin.clear();
+			cin.ignore();
+
+			current += 5;
+		}
+	} while (choose != 9);
+}*/
 
 int phoneBook::saveList()//saving the list
 {
@@ -107,9 +137,9 @@ int phoneBook::saveList()//saving the list
 	}
 	for (int i = 0; i < entryCount; i++)
 	{
-		output << mylist[i]->name << ",";
-		output << mylist[i]->homePhone << ",";
-		output << mylist[i]->mobilePhone << ",";
+		output << mylist[i]->name << "|";
+		output << mylist[i]->homePhone << "|";
+		output << mylist[i]->mobilePhone << "|";
 	}
 	output.close();
 	return 0;
@@ -131,11 +161,11 @@ void phoneBook::readList()//reading in
 		char homePhone[14];
 		char mobilePhone[14];
 
-		infile.getline(name, 50, ',');
+		infile.getline(name, 50, '|');
 		if (strlen(name))
 		{
-			infile.getline(homePhone, 14, ',');
-			infile.getline(mobilePhone, 14, ',');
+			infile.getline(homePhone, 14, '|');
+			infile.getline(mobilePhone, 14, '|');
 			ptr = new entry();
 			ptr->setEntry(name, homePhone, mobilePhone);
 			addToList(ptr);
@@ -205,7 +235,7 @@ int main()
 		}
 		else if (answer == 9)
 		{
-			cout << "Closing program, here is your phonebook: " << endl;
+			cout << "Saving... Closing program... here is your phonebook: " << endl;
 		}
 		else
 		{
